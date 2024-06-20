@@ -5,7 +5,7 @@ pipeline {
 
         stage("git login"){
             steps{
-                git branch: 'main', url: 'https://github.com/kshitijhatwar/docker-jenkins.git'
+                git branch: 'main', url: 'https://github.com/kshitijhatwar/Docker_Jenkins_project01.git'
             }
         }
         stage("docker Build"){
@@ -33,9 +33,9 @@ pipeline {
                     def docker_rmi = 'docker rmi -f kshitijhatwar/dockerbuildjob'
 
                     sshagent(['sshKey']){
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@13.201.18.4 ${docker_rmv_container}"
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@13.201.18.4 ${docker_rmi}"
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@13.201.18.4 ${docker_run}"
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.6.88.254 ${docker_rmv_container}"
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.6.88.254 ${docker_rmi}"
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.6.88.254 ${docker_run}"
                     }
                 }
             }
