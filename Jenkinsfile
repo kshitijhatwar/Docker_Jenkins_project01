@@ -10,7 +10,7 @@ pipeline {
         }
         stage("docker Build"){
             steps{
-                sh "docker image build -t $JOB_NAME:v1.$BUILD_ID."
+                sh "docker image build -t $JOB_NAME:v1.$BUILD_ID ."
                 sh "docker image tag $JOB_NAME:v1.$BUILD_ID kshitijhatwar/$JOB_NAME:v1.$BUILD_ID"
                 sh "docker image tag $JOB_NAME:v1.$BUILD_ID kshitijhatwar/$JOB_NAME:latest"
             }
