@@ -19,7 +19,7 @@ pipeline {
             steps{
                 withCredentials([string(credentialsId: 'docker-jenkins', variable: 'doc_jen')]) {
                 sh "docker login -u kshitijhatwar -p ${doc_jen}"
-                sh "docker image push kshitijhatwar/$JOB_NAME:v1.$BUILD_ID"
+                sh "docker image push kshitijhatwar/$JOB_NAME:.$BUILD_ID"
                 sh "docker image push kshitijhatwar/$JOB_NAME:latest"
                 sh "docker rmi $JOB_NAME:v1.$BUILD_ID kshitijhatwar/$JOB_NAME:v1.$BUILD_ID kshitijhatwar/$JOB_NAME:latest"
                 }
@@ -28,9 +28,9 @@ pipeline {
         stage("Docker Container Deployment"){
             steps{
                 script{
-                    def docker_run = 'docker run -p 9008:80 --name docker-demo kshitijhatwar/$JOB_NAME:latest
+                    def docker_run = 'docker run -p 9008:80 --name docker-demo kshitijhatwar/dockerproject1:latest
                     def docker_rmv_container = 'docker rm -f docker-demo'
-                    def docker_rmi = 'docker rmi -f kshitijhatwar/$JOB_NAME:latest'
+                    def docker_rmi = 'docker rmi -f kshitijhatwar/dockerproject1:latest'
 
                     sshagent(['sshkey']){
                         sh "ssh -o StrictHostKeyChecking=no ubuntu@3.110.161.148 ${docker_rmv_container}"
