@@ -34,9 +34,6 @@ pipeline {
 
 
                     sshagent(['sshkey']){
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.110.161.148 ${docker_rmv_container}"
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.110.161.148 ${docker_rmi}"
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.110.161.148 ${docker_run}"
                         sh "ssh -o StrictHostKeyChecking=no ubuntu@3.110.161.148 ${docker_status}"
                     }
                 }
