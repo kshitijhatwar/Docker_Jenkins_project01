@@ -19,7 +19,7 @@ pipeline {
             steps{
                 withCredentials([string(credentialsId: 'docker-jenkins', variable: 'doc_jen')]) {
                 sh "docker login -u kshitijhatwar -p ${doc_jen}"
-                sh "docker image push kshitijhatwar/$JOB_NAME:.$BUILD_ID"
+                sh "docker image push kshitijhatwar/$JOB_NAME:v1.$BUILD_ID"
                 sh "docker image push kshitijhatwar/$JOB_NAME:latest"
                 sh "docker rmi $JOB_NAME:v1.$BUILD_ID kshitijhatwar/$JOB_NAME:v1.$BUILD_ID kshitijhatwar/$JOB_NAME:latest"
                 }
