@@ -30,12 +30,14 @@ pipeline {
                     def docker_run = 'docker run -p 9008:80 --name docker-demo kshitijhatwar/dockerbuildjob:latest'
                     def docker_rmv_container = 'docker rm -f docker-demo'
                     def docker_rmi = 'docker rmi -f kshitijhatwar/dockerbuildjob'
+                    def docker_status = ' systemctl ststus docker'
 
 
                     sshagent(['sshkey']){
                         sh "ssh -o StrictHostKeyChecking=no ubuntu@3.110.161.148 ${docker_rmv_container}"
                         sh "ssh -o StrictHostKeyChecking=no ubuntu@3.110.161.148 ${docker_rmi}"
                         sh "ssh -o StrictHostKeyChecking=no ubuntu@3.110.161.148 ${docker_run}"
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.110.161.148 ${docker_status}"
                     }
                 }
             }
