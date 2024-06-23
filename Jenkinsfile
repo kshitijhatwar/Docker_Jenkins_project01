@@ -3,19 +3,19 @@ pipeline {
 
     stages{
 
-        stage("git login"){
+        stage("Git Login"){
             steps{
                 git branch: 'main', url: 'https://github.com/kshitijhatwar/Docker_Jenkins_project01.git'
             }
         }
-        stage("docker Build"){
+        stage("Docker Build"){
             steps{
                 sh "docker image build -t $JOB_NAME:v1.$BUILD_ID ."
                 sh "docker image tag $JOB_NAME:v1.$BUILD_ID kshitijhatwar/$JOB_NAME:v1.$BUILD_ID"
                 sh "docker image tag $JOB_NAME:v1.$BUILD_ID kshitijhatwar/$JOB_NAME:latest"
             }
         }
-        stage("push docker image"){
+        stage("Push Docker Image"){
             steps{
                 withCredentials([string(credentialsId: 'docker-jenkins', variable: 'doc_jen')]) {
                 sh "docker image push kshitijhatwar/$JOB_NAME:v1.$BUILD_ID"
@@ -24,7 +24,7 @@ pipeline {
                 }
             }
         }
-        stage("Docker Container Deployment"){
+        stage("Docker Container Deployment to Web Server"){
             steps{
                 script{
                     def docker_run = 'docker run -p 9008:80 --name docker-demo kshitijhatwar/dockerbuildjob:latest'
@@ -34,7 +34,9 @@ pipeline {
 
 
                     sshagent(['sshkey']){
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.110.161.148 ${docker_status}"
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@65.0.169.139 ${docker_rmv_container}"
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@65.0.169.139 ${docker_rmi}"
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@65.0.169.139 ${docker_run}"
                     }
                 }
             }
